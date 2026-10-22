@@ -1,0 +1,84 @@
+classDiagram
+direction TB
+    class Main {
+	    +main(args: String[]) void$
+    }
+
+    class Recepcion {
+	    -catalogo: Catalogo
+	    +Recepcion(catalogo: Catalogo)
+	    +registrarLibro(libro: Libro) void
+	    +consultarLibro(titulo: String) Libro
+	    +totalLibros() int
+    }
+
+    class Catalogo {
+	    -libros: List~Libro~
+	    +agregar(libro: Libro) void
+	    +buscarPorTitulo(titulo: String) Libro
+	    +total() int
+    }
+
+    class Libro {
+	    -titulo: String
+	    -autor: String
+	    -isbn: Isbn
+	    -categoria: String
+	    -multaPorDia: double
+	    -valorReposicion: double
+	    +Libro(titulo: String, autor: String, isbn: String, categoria: String, multaPorDia: double, valorReposicion: double)
+	    +getTitulo() String
+	    +getAutor() String
+	    +getIsbn() String
+	    +getCategoria() String
+	    +getMultaPorDia() double
+	    +getValorReposicion() double
+    }
+
+    class Isbn {
+	    -valor: String
+	    +Isbn(valor: String)
+	    +getValor() String
+    }
+
+    class Socio {
+	    -nombre: String
+	    -ciudad: String
+	    -telefonoCodigoArea: String
+	    -telefonoNumero: String
+	    -diasPlazoPrestamo: int
+	    +Socio(nombre: String, ciudad: String, telefonoCodigoArea: String, telefonoNumero: String, diasPlazoPrestamo: int)
+	    +getNombre() String
+	    +getCiudad() String
+	    +getDiasPlazoPrestamo() int
+	    +obtenerTelefonoCompleto() String
+	    +esTelefonoLocal() boolean
+    }
+
+    class Prestamo {
+	    -libro: Libro
+	    -socio: Socio
+	    -fechaPrestamo: Date
+	    -fechaDevolucion: Date
+	    +Prestamo(libro: Libro, socio: Socio, fechaPrestamo: Date, fechaDevolucion: Date)
+	    +getLibro() Libro
+	    +getSocio() Socio
+	    +calcularFechaVencimiento() Date
+	    +calcularDiasRetraso() int
+	    +calcularMulta(diasRetraso: int) double
+	    -diasEntre(desde: Date, hasta: Date) int
+	    -formatearFecha(fecha: Date) String
+	    -esFinDeSemana(fecha: Date) boolean
+	    +imprimirResumen() void
+    }
+
+    Recepcion --> "1" Catalogo : catalogo
+    Catalogo o-- "0..*" Libro : libros
+    Libro *-- "1" Isbn : isbn
+    Prestamo --> "1" Libro : libro
+    Prestamo --> "1" Socio : socio
+    Main ..> Recepcion : crea
+    Main ..> Catalogo : crea
+    Main ..> Libro : crea
+    Main ..> Socio : crea
+    Main ..> Prestamo : crea
