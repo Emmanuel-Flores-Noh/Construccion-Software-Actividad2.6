@@ -1,6 +1,8 @@
 package biblioteca;
 
 public class Libro {
+    private static final double MULTIPLICADOR_MULTA_NOVEDAD = 2;
+
     private String titulo;
     private String autor;
     // REFACTOR INLINE CLASS 
@@ -28,7 +30,8 @@ public class Libro {
     public double getValorReposicion() { return valorReposicion; }
 
     // REFACTOR MOVE METHOD
-    // El método estaba la clase Prestamo, pero se movio a la clase Libro que tiene mas relacion con los atributos que usa para hacer el cálculo
+    // El método estaba la clase Prestamo, pero se movio a la clase Libro que tiene mas relacion con los atributos
+    // que usa para hacer el cálculo
     
     public double calcularMulta(int diasRetraso) {
         if (diasRetraso <= 0) {
@@ -36,7 +39,7 @@ public class Libro {
         }
         double multa = diasRetraso * multaPorDia;
         if ("NOVEDAD".equals(categoria)) {
-            multa *= 2;
+            multa *= MULTIPLICADOR_MULTA_NOVEDAD;
         }
         if (multa > valorReposicion) {
             multa = valorReposicion;

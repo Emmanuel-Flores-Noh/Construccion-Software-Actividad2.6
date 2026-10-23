@@ -16,26 +16,24 @@ public class Main {
         System.out.println("Libros registrados: " + catalogo.total());
 
         Libro libro = catalogo.buscarPorTitulo("java basico");
-        Socio socio = new Socio("Ana Lopez", "Merida");
-        Telefono telefono = new Telefono("999", "1234567");
+        Socio socio = new Socio("Ana Lopez", "Merida", new Telefono("999", "1234567"));
 
         Date fechaPrestamo = new GregorianCalendar(2026, Calendar.OCTOBER, 1).getTime();
         Date fechaDevolucion = new GregorianCalendar(2026, Calendar.OCTOBER, 22).getTime();
-        Prestamo prestamo = new Prestamo(libro, socio, telefono, fechaPrestamo, fechaDevolucion, 14);
+        Prestamo prestamo = new Prestamo(libro, socio, fechaPrestamo, fechaDevolucion, 14);
 
         System.out.println("-----------------------------");
         prestamo.imprimirResumen();
         System.out.println("-----------------------------");
 
-        // HIDE DELEGATE
         System.out.println("Ciudad del socio: " + prestamo.getCiudadSocio());
-        System.out.println("Telefono del socio: " + prestamo.getTelefono().obtenerTelefonoCompleto());
+        System.out.println("Telefono del socio: " + prestamo.getTelefonoSocio());
         System.out.println("Autor del libro: " + prestamo.getLibro().getAutor());
 
         int retraso = prestamo.calcularDiasRetraso();
         System.out.println("Dias de retraso: " + retraso);
         System.out.println("Multa: $" + libro.calcularMulta(retraso));
         System.out.println("ISBN: " + libro.getIsbn());
-        System.out.println("Telefono local: " + telefono.esTelefonoLocal());
+        System.out.println("Telefono local: " + socio.esTelefonoLocal());
     }
 }

@@ -7,6 +7,10 @@ El codigo fuente se encuentra en [`src/biblioteca/`](src/biblioteca/).
 ## Diagrama de clases - Antes de la refactorización
 
 ```mermaid
+---
+config:
+  theme: redux-color
+---
 classDiagram
 direction TB
     class Main {
@@ -96,6 +100,10 @@ direction TB
 ## Diagrama de clases — Después de la refactorización
 
 ```mermaid
+---
+config:
+  theme: redux-color
+---
 classDiagram
 direction TB
     class Main {
@@ -110,6 +118,7 @@ direction TB
     }
 
     class Libro {
+        -MULTIPLICADOR_MULTA_NOVEDAD: double$
         -titulo: String
         -autor: String
         -isbn: String
@@ -129,12 +138,16 @@ direction TB
     class Socio {
         -nombre: String
         -ciudad: String
-        +Socio(nombre: String, ciudad: String)
+        -telefono: Telefono
+        +Socio(nombre: String, ciudad: String, telefono: Telefono)
         +getNombre() String
         +getCiudad() String
+        +getTelefono() String
+        +esTelefonoLocal() boolean
     }
 
     class Telefono {
+        -CODIGO_AREA_LOCAL: String$
         -telefonoCodigoArea: String
         -telefonoNumero: String
         +Telefono(telefonoCodigoArea: String, telefonoNumero: String)
@@ -143,6 +156,7 @@ direction TB
     }
 
     class FechaExtension {
+        -MILIS_POR_DIA: long$
         -fecha: Date
         +FechaExtension(fecha: Date)
         +getFecha() Date
@@ -155,30 +169,28 @@ direction TB
     class Prestamo {
         -libro: Libro
         -socio: Socio
-        -telefono: Telefono
         -fechaPrestamo: Date
         -fechaDevolucion: Date
         -diasPlazoPrestamo: int
-        +Prestamo(libro: Libro, socio: Socio, telefono: Telefono, fechaPrestamo: Date, fechaDevolucion: Date, diasPlazoPrestamo: int)
+        +Prestamo(libro: Libro, socio: Socio, fechaPrestamo: Date, fechaDevolucion: Date, diasPlazoPrestamo: int)
         +getLibro() Libro
         +getSocio() Socio
         +getCiudadSocio() String
-        +getTelefono() Telefono
+        +getTelefonoSocio() String
         +getDiasPlazoPrestamo() int
         +calcularFechaVencimiento() Date
-        +sumarDias(fechaPrestamoDate: Date, diasPlazoPrestamo: int) long
         +calcularDiasRetraso() int
         +imprimirResumen() void
     }
 
     Catalogo o-- "0..*" Libro : libros
+    Socio *-- "1" Telefono : telefono
     Prestamo --> "1" Libro : libro
     Prestamo --> "1" Socio : socio
-    Prestamo --> "1" Telefono : telefono
     Prestamo ..> FechaExtension : usa
     Main ..> Catalogo : crea y usa
     Main ..> Libro : crea
-    Main ..> Socio : crea
     Main ..> Telefono : crea
+    Main ..> Socio : crea
     Main ..> Prestamo : crea
 ```
