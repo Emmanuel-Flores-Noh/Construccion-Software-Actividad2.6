@@ -1,0 +1,16 @@
+Libros registrados: 2
+-----------------------------
+Libro: Java Basico
+Socio: Ana Lopez
+Prestado: 01/10/2026
+Vence: 15/10/2026
+Vence en fin de semana: false
+Devuelto: 22/10/2026
+-----------------------------
+Ciudad del socio: Merida
+Telefono del socio: (999) 1234567
+Autor del libro: R. Perez
+Dias de retraso: 7
+Multa: $70.0
+ISBN: 978-1-11111-111-1
+Telefono local: true

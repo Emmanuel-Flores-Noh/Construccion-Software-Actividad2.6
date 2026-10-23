@@ -1,0 +1,85 @@
+classDiagram
+direction TB
+    class Main {
+        +main(args: String[]) void$
+    }
+
+    class Catalogo {
+        -libros: List~Libro~
+        +agregar(libro: Libro) void
+        +buscarPorTitulo(titulo: String) Libro
+        +total() int
+    }
+
+    class Libro {
+        -titulo: String
+        -autor: String
+        -isbn: String
+        -categoria: String
+        -multaPorDia: double
+        -valorReposicion: double
+        +Libro(titulo: String, autor: String, isbn: String, categoria: String, multaPorDia: double, valorReposicion: double)
+        +getTitulo() String
+        +getAutor() String
+        +getIsbn() String
+        +getCategoria() String
+        +getMultaPorDia() double
+        +getValorReposicion() double
+        +calcularMulta(diasRetraso: int) double
+    }
+
+    class Socio {
+        -nombre: String
+        -ciudad: String
+        +Socio(nombre: String, ciudad: String)
+        +getNombre() String
+        +getCiudad() String
+    }
+
+    class Telefono {
+        -telefonoCodigoArea: String
+        -telefonoNumero: String
+        +Telefono(telefonoCodigoArea: String, telefonoNumero: String)
+        +obtenerTelefonoCompleto() String
+        +esTelefonoLocal() boolean
+    }
+
+    class FechaExtension {
+        -fecha: Date
+        +FechaExtension(fecha: Date)
+        +getFecha() Date
+        +sumarDias(dias: int) Date
+        +diasHasta(otraFecha: Date) int
+        +esFinDeSemana() boolean
+        +formatear() String
+    }
+
+    class Prestamo {
+        -libro: Libro
+        -socio: Socio
+        -telefono: Telefono
+        -fechaPrestamo: Date
+        -fechaDevolucion: Date
+        -diasPlazoPrestamo: int
+        +Prestamo(libro: Libro, socio: Socio, telefono: Telefono, fechaPrestamo: Date, fechaDevolucion: Date, diasPlazoPrestamo: int)
+        +getLibro() Libro
+        +getSocio() Socio
+        +getCiudadSocio() String
+        +getTelefono() Telefono
+        +getDiasPlazoPrestamo() int
+        +calcularFechaVencimiento() Date
+        +sumarDias(fechaPrestamoDate: Date, diasPlazoPrestamo: int) long
+        +calcularDiasRetraso() int
+        +imprimirResumen() void
+    }
+
+    Catalogo o-- "0..*" Libro : libros
+    Prestamo --> "1" Libro : libro
+    Prestamo --> "1" Socio : socio
+    Prestamo --> "1" Telefono : telefono
+    Prestamo ..> FechaExtension : usa
+    Main ..> Catalogo : crea y usa
+    Main ..> Libro : crea
+    Main ..> Socio : crea
+    Main ..> Telefono : crea
+    Main ..> Prestamo : crea
